@@ -5,9 +5,9 @@ This is just an example to demonstrate how to create a realtime application with
 To try this project, you must have **NodeJS** installed on your computer. You can learn more about NodeJS [here](https://github.com/nodejs/node).
 ### Running the project:
 1. Clone this repository or download as zip archive and extract it.
-2. Open terminal or commend prompt depends on what your operation system you are using 
-3. Go to directory where you put the project is.
-4. Run the following code:
+2. Open **terminal** or **commend prompt**, depends on what the operating system you are using.
+3. In **Terminal**, go to directory where you put the project in.
+4. Then run the following command:
 ```shell script
 node index.js
 ```
@@ -21,6 +21,7 @@ Server running at 127.0.0.1:4000
 ### Credits
 Thanks to:
 * [NodeJS](https://github.com/nodejs/node)
+* [ExpressJS](https://github.com/expressjs/express)
 * [Socket.IO](https://github.com/socketio/socket.io)
 * And anyone who support us.
 
