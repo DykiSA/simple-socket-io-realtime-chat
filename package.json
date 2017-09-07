@@ -1,0 +1,22 @@
+{
+  "name": "simple-realtime-chat",
+  "version": "1.0.0",
+  "description": "NodeJS realtime chatting application with Socket IO",
+  "main": "./index.js",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "keywords": [
+    "nodejs",
+    "socket",
+    "chatting",
+    "realtime"
+  ],
+  "author": "Dyki Surahman Abi",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "socket.io": "^2.0.3"
+  }
+}

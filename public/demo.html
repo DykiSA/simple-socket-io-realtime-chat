@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{padding:0;margin:0;}
+		body{
+			font-family: Helvetica;
+		}
+		hr {
+			border: 0.4px solid #ddd;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+		.container {
+			border: 1px solid #ddd;
+			padding: 10px;
+			width: 500px;
+			margin: 10px auto 10px auto;
+		}
+		.container form {
+			margin-bottom: 10px;
+		}
+		.container form fieldset {
+			border: 1px solid #ddd;
+			padding: 3px;
+		}
+		input[name="message"]{
+			width: 300px;
+		}
+		.container #chat {
+			max-height: 600px;
+			overflow: scroll;
+			min-height: 10px;
+			border: 1px solid #DDD;
+			background: #F7F5F8;
+			padding: 10px;
+		}
+		#chat .info {
+			color: #56585A;
+			text-align: center;
+			font-size: 8px;
+		}
+		p#footer {
+			color: #878A8E;
+			text-align: center;
+			font-size: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<form>
+			<fieldset>
+				<input type="text" name="message" placeholder="Type message ...">
+				<button type="button" onclick="sendMessage()">Send</button>
+			</fieldset>
+		</form>
+
+		<div id="chat"></div>
+	</div>
+	<p id="footer">Demo Chat with Socket IO by Dyki Surahman &copy; 2017</p>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		var form = document.getElementsByTagName('form');
+		var socket = io();
+		var chatCount = 0;
+		socket.color = getRandomColor();
+
+		socket.on('connect', function() {
+			console.log('connected');
+			popInfo('You just connected');
+		});
+
+		socket.on('user connect', function(socket_id) {
+			console.log('user connected');
+			popInfo('New user connected: '+socket_id);
+		});
+
+		socket.on('user disconnect', function(socket_id) {
+			console.log('user disconnected');
+			popInfo(socket_id+' diconnected');
+		});
+
+		function sendMessage() {
+			var inputText = document.getElementsByName('message')[0];
+			var data = {
+				socket_id: socket.id,
+				socket_color: socket.color,
+				message: inputText.value
+			}
+
+			// send message
+			socket.emit('chat', data, function() {
+				popMessage(socket.id, data.message, socket.color);
+				inputText.value = '';
+			});
+		};
+
+		socket.on('new chat', function(data) {
+			var id = data.socket_id;
+			var	color = data.socket_color;
+			var message = data.message;
+
+			popMessage(id, message, color);
+		});
+
+		function popInfo(message) {
+			appendChatItem(message, true);
+		}
+
+		function popMessage(from, message, color) {
+			if (from == socket.id) {
+				from = 'Me';
+			}
+			var html = '<span style="color:'+color+';">'+from+'</span>: '+message;
+			appendChatItem(html);
+		}
+
+		function appendChatItem(html, info) {
+			// create new DOM element
+			var chatItem = document.createElement('p');
+			var divider = document.createElement('hr');
+			if (info !== 'undefined' && info == true) {
+				chatItem.className += ' info';
+			}
+			chatItem.innerHTML = html;
+			// append new element to chatWrapper
+			var chatWrapper = document.getElementById('chat');
+			if (chatCount > 0) {
+				chatWrapper.appendChild(divider);
+			}
+			chatWrapper.appendChild(chatItem);
+			chatCount++;
+		}
+
+		function getRandomColor() {
+			var lum = -0.25;
+		    var hex = String('#' + Math.random().toString(16).slice(2, 8).toUpperCase()).replace(/[^0-9a-f]/gi, '');
+		    if (hex.length < 6) {
+		        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+		    }
+		    var rgb = "#",
+		        c, i;
+		    for (i = 0; i < 3; i++) {
+		        c = parseInt(hex.substr(i * 2, 2), 16);
+		        c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+		        rgb += ("00" + c).substr(c.length);
+		    }
+		    return rgb;
+		}
+
+	</script>
+</body>
+</html>
