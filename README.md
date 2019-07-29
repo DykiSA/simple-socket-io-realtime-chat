@@ -7,9 +7,10 @@ To try this project, you must have **NodeJS** installed on your computer. You ca
 1. Clone this repository or download as zip archive and extract it.
 2. Open **terminal** or **commend prompt**, depends on what the operating system you are using.
 3. In **Terminal**, go to directory where you put the project in.
+4. Type `npm install` then press enter and wait until process finished, it will try to install required dependencies
 4. Then run the following command:
 ```shell script
-node index.js
+npm start
 ```
 5. You should see message like this in your terminal:
 ```
