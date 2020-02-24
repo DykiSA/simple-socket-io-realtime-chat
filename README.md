@@ -1,4 +1,7 @@
 # Simple Realtime Chat
+
+![Simple Realtime Chat](./preview.gif "Preview")
+
 ### Introduction
 This is just an example to demonstrate how to create a realtime application with **NodeJS**, **Express** and **SocketIO**.
 ### Requirments
